@@ -2,6 +2,7 @@ import * as Sentry from "@sentry/node";
 import express from "express";
 import errorHandler from "./middleware/errorHandler.js";
 import userRouter from "../routes/users.js";
+import loginRouter from "../routes/login.js";
 
 const app = express();
 
@@ -31,6 +32,8 @@ app.use(express.json());
 
 //Routes go here
 app.use("/users", userRouter);
+//login Route
+app.use("/login", loginRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello world!");
