@@ -1,6 +1,7 @@
 import * as Sentry from "@sentry/node";
 import express from "express";
 import errorHandler from "./middleware/errorHandler.js";
+import userRouter from "../routes/users.js";
 
 const app = express();
 
@@ -12,7 +13,6 @@ Sentry.init({
     new Sentry.Integrations.Http({ tracing: true }),
     // enable Express.js middleware tracing
     new Sentry.Integrations.Express({ app }),
-    new ProfilingIntegration(),
   ],
   // Performance Monitoring
   tracesSampleRate: 1.0,
@@ -30,7 +30,7 @@ app.use(Sentry.Handlers.tracingHandler());
 app.use(express.json());
 
 //Routes go here
-//...
+app.use("/users", userRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello world!");
