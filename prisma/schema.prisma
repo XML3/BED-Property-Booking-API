@@ -18,7 +18,7 @@ model User {
   name          String
   email         String
   phoneNumber   String
-  pictureUrl    String
+  profilePicture    String
   reviews        Review[]
   bookings       Booking[]
 }
@@ -30,7 +30,7 @@ model Host {
   name          String
   email         String
   phoneNumber   String
-  pictureUrl    String
+  profilePicture    String
   aboutMe       String
   listings      Property[]
   }
@@ -47,8 +47,10 @@ model Booking {
   totalPrice      Int
   bookingStatus   String
 
-  user  User          @relation(fields: [userId], references: [id])
-   @@index([userId, propertyId])
+  user        User              @relation(fields: [userId], references: [id])
+  property    Property    @relation(fields: [propertyId], references: [id])
+   @@index([userId])
+   @@index([propertyId])
 }
 
 model Review {
@@ -59,9 +61,11 @@ model Review {
   rating          Int
   comment         String //LONGTEXT?
 
+  property Property @relation(fields: [propertyId], references: [id])
   user  User @relation(fields: [userId], references: [id])
 
-  @@index([userId, propertyId])
+  @@index([userId])
+  @@index([propertyId])
 }
 
 //many to many
@@ -80,12 +84,14 @@ model Property {
   description     String
   location        String
   pricePerNight   Decimal
-  bedroonCount    Int
+  bedroomCount    Int
   maxGuestCount   Int
   rating          Int
 
   host Host         @relation(fields: [hostId], references: [id])
   amenities         Amenity[]
+  booking           Booking[]
+  review            Review[]
  
 @@index([hostId])
 }
