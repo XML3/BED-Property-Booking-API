@@ -90,8 +90,8 @@ model Property {
 
   host Host         @relation(fields: [hostId], references: [id])
   amenities         Amenity[]
-  booking           Booking[]
-  review            Review[]
+  bookings           Booking[]
+  reviews           Review[]
  
 @@index([hostId])
 }
