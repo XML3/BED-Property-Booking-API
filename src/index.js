@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/node";
+import "dotenv/config";
 import express from "express";
 import errorHandler from "./middleware/errorHandler.js";
 import usersRouter from "../routes/users.js";
