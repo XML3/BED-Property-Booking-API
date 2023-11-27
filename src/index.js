@@ -1,7 +1,7 @@
 import * as Sentry from "@sentry/node";
 import express from "express";
 import errorHandler from "./middleware/errorHandler.js";
-import userRouter from "../routes/users.js";
+import usersRouter from "../routes/users.js";
 import loginRouter from "../routes/login.js";
 
 const app = express();
@@ -31,7 +31,7 @@ app.use(Sentry.Handlers.tracingHandler());
 app.use(express.json());
 
 //Routes go here
-app.use("/users", userRouter);
+app.use("/users", usersRouter);
 //login Route
 app.use("/login", loginRouter);
 
