@@ -1,8 +1,8 @@
 import express from "express";
 import errorHandler from "./middleware/errorHandler.js";
 import log from "../src/middleware/logMiddleware.js";
-//import usersRouter from "../routes/users.js";
-//import loginRouter from "../routes/login.js";
+import usersRouter from "../routes/users.js";
+import loginRouter from "../routes/login.js";
 import * as Sentry from "@sentry/node";
 import "dotenv/config";
 
@@ -32,13 +32,13 @@ app.use(express.json());
 app.use(log);
 
 //Routes go here
-//app.use("/users", usersRouter);
-//login Route
-//app.use("/login", loginRouter);
+app.use("/users", usersRouter);
+// login Route
+app.use("/login", loginRouter);
 
-app.get("/", (req, res) => {
-  res.send("Hello world!");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hello world!");
+// });
 
 // The error handler must be registered before any other error middleware and after all controllers
 app.use(Sentry.Handlers.errorHandler());
