@@ -3,7 +3,7 @@ import winston from "winston";
 const logger = winston.createLogger({
   level: "infor",
   format: winston.format.json(),
-  defaultMeta: { service: "events-api" },
+  defaultMeta: { service: "bookings-api" },
 });
 
 if (process.env.NODE_ENV !== "production") {
