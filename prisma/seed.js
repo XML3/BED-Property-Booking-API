@@ -67,10 +67,10 @@ async function main() {
         amenities: {
           connect: property.amenities.map((amenityId) => ({ id: amenityId })),
         },
-        booking: {
+        bookings: {
           connect: property.bookings.map((bookingId) => ({ id: bookingId })),
         },
-        review: {
+        reviews: {
           connect: property.reviews.map((reviewId) => ({ id: reviewId })),
         },
       },
@@ -96,7 +96,7 @@ async function main() {
   }
 }
 
-for (const user of user) {
+for (const user of users) {
   await prisma.user.upsert({
     where: { id: user.id },
     update: {},
@@ -108,10 +108,10 @@ for (const user of user) {
       email: user.email,
       phoneNumber: user.phoneNumber,
       profilePicture: user.profilePicture,
-      review: {
+      reviews: {
         connect: user.reviews.map((reviewId) => ({ id: reviewId })),
       },
-      booking: {
+      bookings: {
         connect: user.bookings.map((bookingId) => ({ id: bookingId })),
       },
     },
