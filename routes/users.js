@@ -4,6 +4,7 @@ import getUsers from "../src/service/users/getUsers.js";
 import createUser from "../src/service/users/createUser.js";
 import deleteUser from "../src/service/users/deleteUserById.js";
 import getUserById from "../src/service/users/getUserById.js";
+import updateUserById from "../src/service/users/updateUserById.js";
 
 const router = express.Router();
 
@@ -66,6 +67,33 @@ router.get("/id:", async (req, res, next) => {
         .send({ message: `User with id ${id} was not found!`, user });
     } else {
       res.status(200).json(user);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+//PUT: Update User by ID
+router.put("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { username, password, name, email, phoneNumber, profilePicture } =
+      req.body;
+    const user = await updateUserById(id, {
+      username,
+      password,
+      name,
+      email,
+      phoneNumber,
+      profilePicture,
+    });
+
+    if (!user) {
+      res.status(404).send({ message: `User with id ${id} was not found!` });
+    } else {
+      res
+        .status(200)
+        .send({ message: `User with id ${id} successfully updated`, user });
     }
   } catch (error) {
     next(error);
