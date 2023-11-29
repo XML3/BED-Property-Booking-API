@@ -66,13 +66,19 @@ async function main() {
           connect: { id: property.hostId },
         },
         amenities: {
-          connect: property.amenities.map((amenityId) => ({ id: amenityId })),
+          connect: property.amenities
+            ? property.amenities.map((amenityId) => ({ id: amenityId }))
+            : [],
         },
         bookings: {
-          connect: property.bookings.map((bookingId) => ({ id: bookingId })),
+          connect: property.bookings
+            ? property.bookings.map((bookingId) => ({ id: bookingId }))
+            : [],
         },
         reviews: {
-          connect: property.reviews.map((reviewId) => ({ id: reviewId })),
+          connect: property.reviews
+            ? property.reviews.map((reviewId) => ({ id: reviewId }))
+            : [],
         },
       },
     });
@@ -95,7 +101,6 @@ async function main() {
       },
     });
   }
-
   for (const user of users) {
     await prisma.user.upsert({
       where: { id: user.id },
