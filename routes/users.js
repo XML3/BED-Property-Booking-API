@@ -3,6 +3,7 @@ import authMiddleware from "../src/middleware/auth.js";
 import getUsers from "../src/service/users/getUsers.js";
 import createUser from "../src/service/users/createUser.js";
 import deleteUser from "../src/service/users/deleteUserById.js";
+import getUserById from "../src/service/users/getUserById.js";
 
 const router = express.Router();
 
@@ -52,4 +53,23 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
     next(error);
   }
 });
+
+//GET: User by ID
+router.get("/id:", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await getUserById(id);
+
+    if (!user) {
+      res
+        .status(404)
+        .send({ message: `User with id ${id} was not found!`, user });
+    } else {
+      res.status(200).json(user);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;
