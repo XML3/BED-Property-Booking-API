@@ -40,6 +40,7 @@ async function main() {
         id: host.id,
         username: host.username,
         password: host.password,
+        name: host.name,
         email: host.email,
         phoneNumber: host.phoneNumber,
         profilePicture: host.profilePicture,
@@ -94,28 +95,28 @@ async function main() {
       },
     });
   }
-}
 
-for (const user of users) {
-  await prisma.user.upsert({
-    where: { id: user.id },
-    update: {},
-    create: {
-      id: user.id,
-      username: user.username,
-      password: user.password,
-      name: user.name,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-      profilePicture: user.profilePicture,
-      reviews: {
-        connect: user.reviews.map((reviewId) => ({ id: reviewId })),
+  for (const user of users) {
+    await prisma.user.upsert({
+      where: { id: user.id },
+      update: {},
+      create: {
+        id: user.id,
+        username: user.username,
+        password: user.password,
+        name: user.name,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        profilePicture: user.profilePicture,
+        reviews: {
+          connect: user.reviews.map((reviewId) => ({ id: reviewId })),
+        },
+        bookings: {
+          connect: user.bookings.map((bookingId) => ({ id: bookingId })),
+        },
       },
-      bookings: {
-        connect: user.bookings.map((bookingId) => ({ id: bookingId })),
-      },
-    },
-  });
+    });
+  }
 }
 
 main()
