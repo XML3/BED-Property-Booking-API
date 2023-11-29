@@ -1,21 +1,21 @@
-import express from "express";
-import login from "../src/service/auth/login.js";
+// import express from "express";
+// import login from "../src/service/auth/login.js";
 
-const router = express.Router();
+// const router = express.Router();
 
-router.post("/", async (req, res, next) => {
-  try {
-    const { username, password } = req.body;
-    const token = await login(username, password);
+// router.post("/", async (req, res, next) => {
+//   try {
+//     const { username, password } = req.body;
+//     const token = await login(username, password);
 
-    if (!token) {
-      res.status(401).json({ message: "Invalid credentials! " });
-    } else {
-      res.status(200).json({ message: "Successfully logged in!", token });
-    }
-  } catch (error) {
-    next(error);
-  }
-});
+//     if (!token) {
+//       res.status(401).json({ message: "Invalid credentials! " });
+//     } else {
+//       res.status(200).json({ message: "Successfully logged in!", token });
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
-export default router;
+// export default router;
