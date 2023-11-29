@@ -84,24 +84,6 @@ async function main() {
     });
   }
 
-  for (const review of reviews) {
-    await prisma.review.upsert({
-      where: { id: review.id },
-      update: {},
-      create: {
-        id: review.id,
-        rating: review.rating,
-        comment: review.comment,
-        property: {
-          connect: { id: review.propertyId },
-        },
-        user: {
-          connect: { id: review.userId },
-        },
-      },
-    });
-  }
-
   for (const user of users) {
     await prisma.user.upsert({
       where: { id: user.id },
@@ -115,10 +97,32 @@ async function main() {
         phoneNumber: user.phoneNumber,
         profilePicture: user.profilePicture,
         reviews: {
-          connect: user.reviews.map((reviewId) => ({ id: reviewId })),
+          connect: user.reviews
+            ? user.reviews.map((reviewId) => ({ id: reviewId }))
+            : [],
         },
         bookings: {
-          connect: user.bookings.map((bookingId) => ({ id: bookingId })),
+          connect: user.bookings
+            ? user.bookings.map((bookingId) => ({ id: bookingId }))
+            : [],
+        },
+      },
+    });
+  }
+
+  for (const review of reviews) {
+    await prisma.review.upsert({
+      where: { id: review.id },
+      update: {},
+      create: {
+        id: review.id,
+        rating: review.rating,
+        comment: review.comment,
+        property: {
+          connect: { id: review.propertyId },
+        },
+        user: {
+          connect: { id: review.userId },
         },
       },
     });
