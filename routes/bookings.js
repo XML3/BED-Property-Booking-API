@@ -3,6 +3,7 @@ import authMiddleware from "../src/middleware/auth.js";
 import getBookings from "../src/service/bookings/getBookings.js";
 import deleteBooking from "../src/service/bookings/deleteBookingById.js";
 import getBookingById from "../src/service/bookings/getBookingById.js";
+import updateBookingById from "../src/service/bookings/updateBookingById.js";
 
 const router = express.Router();
 
@@ -72,6 +73,43 @@ router.get("/:id", async (req, res, next) => {
       res.status(404).send(`Booking with id ${id} was not found!`);
     } else {
       res.status(200).json(booking);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+//UPDATE: bookings by ID
+router.put("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const {
+      userId,
+      propertyId,
+      checkinDate,
+      checkoutDate,
+      numberOfGuests,
+      totalPrice,
+      bookingStatus,
+    } = req.body;
+
+    const updatedBooking = await updateBookingById(id, {
+      userId,
+      propertyId,
+      checkinDate,
+      checkoutDate,
+      numberOfGuests,
+      totalPrice,
+      bookingStatus,
+    });
+
+    if (updatedBooking) {
+      res.status(200).send({
+        message: `Booking with id ${id} successfully updated!`,
+        updatedBooking,
+      });
+    } else {
+      res.status(404).json({ message: ` Booking with id ${id} not found! ` });
     }
   } catch (error) {
     next(error);
