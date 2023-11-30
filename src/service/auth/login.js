@@ -11,7 +11,6 @@ const login = async (username, password) => {
     },
   });
 
-  // musst add username and password in conditional statement, or it will give token without these present.  Safety issue
   if (!username || !password || !user) {
     return null;
   }
