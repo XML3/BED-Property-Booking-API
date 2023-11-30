@@ -11,10 +11,7 @@ const login = async (username, password) => {
     },
   });
 
-  if (!username || !user) {
-    return null;
-  }
-  if (!password || !password) {
+  if (!username || !password || !user) {
     return null;
   }
 
