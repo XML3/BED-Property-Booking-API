@@ -11,9 +11,13 @@ const login = async (username, password) => {
     },
   });
 
-  if (!user) {
+  if (!username || !user) {
     return null;
   }
+  if (!password || !password) {
+    return null;
+  }
+
   const token = jwt.sign({ userId: user.id }, secretKey);
   return token;
 };
