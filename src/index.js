@@ -2,6 +2,7 @@ import express from "express";
 import errorHandler from "./middleware/errorHandler.js";
 import log from "../src/middleware/logMiddleware.js";
 import usersRouter from "../routes/users.js";
+import bookingsRouter from "../routes/bookings.js";
 import loginRouter from "../routes/login.js";
 import * as Sentry from "@sentry/node";
 import "dotenv/config";
@@ -33,6 +34,7 @@ app.use(log);
 
 //Routes go here
 app.use("/users", usersRouter);
+app.use("/bookings", bookingsRouter);
 // login Route
 app.use("/login", loginRouter);
 
