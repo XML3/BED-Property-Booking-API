@@ -9,7 +9,7 @@ const updateBookingById = async (id, updatedBooking) => {
     where: { id },
     data: {
       ...rest,
-      userId: {
+      user: {
         connect: { id: userId },
       },
       property: {
