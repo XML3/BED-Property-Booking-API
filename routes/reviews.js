@@ -39,7 +39,7 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
       res.status(404).send(`Review with id ${id} not found! `);
     } else {
       res.status(200).json({
-        message: ` Review with id ${deletedReviewById} was successfully deleted!`,
+        message: ` Review with id ${id} was successfully deleted!`,
       });
     }
   } catch (error) {
@@ -69,17 +69,17 @@ router.put("/:id", authMiddleware, async (req, res, next) => {
     const { id } = req.params;
     const { userId, propertyId, rating, comment } = req.body;
 
-    const review = await updateReviewById(id, {
+    const updatedReview = await updateReviewById(id, {
       userId,
       propertyId,
       rating,
       comment,
     });
 
-    if (review) {
+    if (updatedReview) {
       res.status(200).send({
-        message: `Review with id ${id} successfully updated!`,
-        review,
+        message: `Review with id ${updatedReview} successfully updated!`,
+        updatedReview,
       });
     } else {
       res.status(404).json({ message: `Review with id ${id} not found!` });
