@@ -22,6 +22,7 @@ const createHost = async (
       aboutMe,
     },
   });
+
   return host;
 };
 
