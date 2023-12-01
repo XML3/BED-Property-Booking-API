@@ -2,6 +2,7 @@ import express from "express";
 import authMiddleware from "../src/middleware/auth.js";
 import getProperties from "../src/service/properties/getProperties.js";
 import createProperty from "../src/service/properties/createProperty.js";
+import deleteBooking from "../src/service/bookings/deleteBookingById.js";
 
 const router = express.Router();
 
@@ -48,5 +49,22 @@ router.post("/", async (req, res, next) => {
 });
 
 //DELETE: Property by ID
+router.delete("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const deletePropertyById = await deleteBooking(id);
 
+    if (!deletePropertyById) {
+      res.status(404).send(`Property with id ${id} was not found!`);
+    } else {
+      res.status(200).json({
+        message: `Property with id ${deletePropertyById} was deleted! `,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+//GET: Property By ID
 export default router;
