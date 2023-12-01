@@ -1,6 +1,7 @@
 import express from "express";
 import authMiddleware from "../src/middleware/auth.js";
 import getBookings from "../src/service/bookings/getBookings.js";
+import createBooking from "../src/service/bookings/createBooking.js";
 import deleteBooking from "../src/service/bookings/deleteBookingById.js";
 import getBookingById from "../src/service/bookings/getBookingById.js";
 import updateBookingById from "../src/service/bookings/updateBookingById.js";
@@ -18,7 +19,7 @@ router.get("/", async (req, res, next) => {
 });
 
 //POST: Create New Booking
-router.post("/", authMiddleware, async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const {
       userId,
