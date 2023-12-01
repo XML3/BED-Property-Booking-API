@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
 });
 
 //POST: Create New User
-router.post("/", authMiddleware, async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const { username, password, name, email, phoneNumber, profilePicture } =
       req.body;
