@@ -2,9 +2,9 @@ import express from "express";
 import authMiddleware from "../src/middleware/auth.js";
 import getProperties from "../src/service/properties/getProperties.js";
 import createProperty from "../src/service/properties/createProperty.js";
-import deleteBooking from "../src/service/bookings/deleteBookingById.js";
 import deleteProperty from "../src/service/properties/deletePropById.js";
 import getPropertyById from "../src/service/properties/getPropById.js";
+import updatePropertyById from "../src/service/properties/updatePropById.js";
 
 const router = express.Router();
 
@@ -85,4 +85,44 @@ router.get("/:id", authMiddleware, async (req, res, next) => {
 });
 
 //UPDATE: Property by ID
+router.put("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const {
+      title,
+      description,
+      location,
+      pricePerNight,
+      bedroomCount,
+      bathRoomCount,
+      maxGuestCount,
+      hostId,
+      rating,
+    } = req.body;
+
+    const updatedProperty = await updatePropertyById(id, {
+      title,
+      description,
+      location,
+      pricePerNight,
+      bedroomCount,
+      bathRoomCount,
+      maxGuestCount,
+      hostId,
+      rating,
+    });
+
+    if (updatedProperty) {
+      res.status(200).send({
+        message: `Property with id ${id} successfully updated!`,
+        updatedProperty,
+      });
+    } else {
+      res.status(404).json({ message: `Property with id ${id} not found!` });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;
