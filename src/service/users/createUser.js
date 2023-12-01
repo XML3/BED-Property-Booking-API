@@ -20,6 +20,8 @@ const createUser = async (
       profilePicture,
     },
   });
+
+  return user;
 };
 
 export default createUser;
