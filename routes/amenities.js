@@ -4,6 +4,7 @@ import getAmenities from "../src/service/amenities/getAmenities.js";
 import createAmenity from "../src/service/amenities/createAmenity.js";
 import deleteAmenityById from "../src/service/amenities/deleteAmenityById.js";
 import getAmenityById from "../src/service/amenities/getAmenityById.js";
+import updateAmenityById from "../src/service/amenities/updateAmenityById.js";
 
 const router = express.Router();
 
@@ -63,5 +64,23 @@ router.get("/:id", authMiddleware, async (req, res, next) => {
 });
 
 //PUT: Update Amenity by ID
+router.put("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { name } = res.body;
+
+    const updatedAmenity = await updateAmenityById(id, { name });
+
+    if (updatedAmenity) {
+      res.status(200).json({
+        message: `Amenity with id ${updatedAmenity} successfully updated!`,
+      });
+    } else {
+      res.status(404).json({ message: `Amenity with id ${id} not found!` });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default router;
