@@ -67,7 +67,7 @@ router.get("/:id", authMiddleware, async (req, res, next) => {
 router.put("/:id", authMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { name } = res.body;
+    const { name } = req.body;
 
     const updatedAmenity = await updateAmenityById(id, { name });
 
