@@ -2,11 +2,12 @@ import { PrismaClient } from "@prisma/client";
 
 const deleteBooking = async (id) => {
   const prisma = new PrismaClient();
-  const booking = prisma.booking.deleteMany({
+
+  const deletedBooking = await prisma.booking.deleteMany({
     where: { id },
   });
 
-  if (booking.count > 0) {
+  if (deletedBooking.count > 0) {
     return id;
   } else {
     return null;
