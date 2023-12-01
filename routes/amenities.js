@@ -1,6 +1,7 @@
 import express from "express";
 import authMiddleware from "../src/middleware/auth.js";
 import getAmenities from "../src/service/amenities/getAmenities.js";
+import createAmenity from "../src/service/amenities/createAmenity.js";
 
 const router = express.Router();
 
@@ -15,5 +16,14 @@ router.get("/", async (req, res, next) => {
 });
 
 //POST: Create New Amenity
+router.post("/", async (req, res, next) => {
+  try {
+    const { name } = req.body;
+    const newAmenity = await createAmenity(name);
+    res.status(201).json(newAmenity);
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default router;
