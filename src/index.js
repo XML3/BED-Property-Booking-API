@@ -6,6 +6,7 @@ import bookingsRouter from "../routes/bookings.js";
 import propertiesRouter from "../routes/properties.js";
 import hostsRouter from "../routes/hosts.js";
 import amenitiesRouter from "../routes/amenities.js";
+import reviewsRouter from "../routes/reviews.js";
 import loginRouter from "../routes/login.js";
 import * as Sentry from "@sentry/node";
 import "dotenv/config";
@@ -41,6 +42,7 @@ app.use("/bookings", bookingsRouter);
 app.use("/properties", propertiesRouter);
 app.use("/hosts", hostsRouter);
 app.use("/amenities", amenitiesRouter);
+app.use("/reviews", reviewsRouter);
 // login Route
 app.use("/login", loginRouter);
 
