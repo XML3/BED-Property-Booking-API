@@ -5,7 +5,7 @@ const updateAmenityById = async (id, updatedAmenity) => {
 
   const amenityUpdated = await prisma.amenity.update({
     where: { id },
-    data: updatedAmenity.name,
+    data: updatedAmenity,
   });
 
   if (amenityUpdated) {
