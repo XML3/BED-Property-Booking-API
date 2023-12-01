@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 const updatePropertyById = async (id, updatedProperty) => {
-  const prisma = PrismaClient();
+  const prisma = new PrismaClient();
 
   const { hostId, ...rest } = updatedProperty;
 
