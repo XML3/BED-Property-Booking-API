@@ -3,6 +3,8 @@ import authMiddleware from "../src/middleware/auth.js";
 import getProperties from "../src/service/properties/getProperties.js";
 import createProperty from "../src/service/properties/createProperty.js";
 import deleteBooking from "../src/service/bookings/deleteBookingById.js";
+import deleteProperty from "../src/service/properties/deletePropById.js";
+import getPropertyById from "../src/service/properties/getPropById.js";
 
 const router = express.Router();
 
@@ -52,7 +54,7 @@ router.post("/", async (req, res, next) => {
 router.delete("/:id", authMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
-    const deletePropertyById = await deleteBooking(id);
+    const deletePropertyById = await deleteProperty(id);
 
     if (!deletePropertyById) {
       res.status(404).send(`Property with id ${id} was not found!`);
@@ -67,4 +69,20 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
 });
 
 //GET: Property By ID
+router.get("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const property = await getPropertyById(id);
+
+    if (!property) {
+      res.status(404).send(`Property with id ${id} was not found!`);
+    } else {
+      res.status(200).json(property);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+//UPDATE: Property by ID
 export default router;
