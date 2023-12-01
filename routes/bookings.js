@@ -65,7 +65,7 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
 });
 
 //GET: Booking By ID
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", authMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
     const booking = await getBookingById(id);
