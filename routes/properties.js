@@ -44,7 +44,7 @@ router.post("/", async (req, res, next) => {
       hostId,
       rating
     );
-    res.status(200).json(newProperty);
+    res.status(201).json(newProperty);
   } catch (error) {
     next(error);
   }
