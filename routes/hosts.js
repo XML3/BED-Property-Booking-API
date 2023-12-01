@@ -2,6 +2,8 @@ import express from "express";
 import authMiddleware from "../src/middleware/auth.js";
 import getHosts from "../src/service/hosts/getHosts.js";
 import createHost from "../src/service/hosts/createHost.js";
+import deleteHostById from "../src/service/hosts/deleteHostById.js";
+import getHostById from "../src/service/hosts/getHostById.js";
 
 const router = express.Router();
 
@@ -42,4 +44,39 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+//DELETE: Host by ID
+router.delete("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const deleteHost = await deleteHostById(id);
+
+    if (!deleteHost) {
+      res.status(404).send(`Host with id ${id} not found!`);
+    } else {
+      res
+        .status(200)
+        .json({ message: `Host with id ${deleteHost} was deleted!` });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+//GET: Host by ID
+router.get("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const hostId = await getHostById(id);
+
+    if (!hostId) {
+      res.status(404).send({ message: `Host with id ${id} not found!` });
+    } else {
+      res.status(200).json(hostId);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+//PUT: Update Host by ID
 export default router;
