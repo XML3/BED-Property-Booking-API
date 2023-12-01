@@ -40,7 +40,7 @@ router.post("/", async (req, res, next) => {
       totalPrice,
       bookingStatus
     );
-    res.status(200).json(newBooking);
+    res.status(201).json(newBooking);
   } catch (error) {
     next(error);
   }
