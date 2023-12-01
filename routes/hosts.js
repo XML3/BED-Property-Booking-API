@@ -4,6 +4,7 @@ import getHosts from "../src/service/hosts/getHosts.js";
 import createHost from "../src/service/hosts/createHost.js";
 import deleteHostById from "../src/service/hosts/deleteHostById.js";
 import getHostById from "../src/service/hosts/getHostById.js";
+import updateHostById from "../src/service/hosts/updateHostById.js";
 
 const router = express.Router();
 
@@ -79,4 +80,37 @@ router.get("/:id", authMiddleware, async (req, res, next) => {
 });
 
 //PUT: Update Host by ID
+router.put("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const {
+      username,
+      password,
+      name,
+      email,
+      phoneNumber,
+      profilePicture,
+      aboutMe,
+    } = req.body;
+    const host = await updateHostById(id, {
+      username,
+      password,
+      name,
+      email,
+      phoneNumber,
+      profilePicture,
+      aboutMe,
+    });
+
+    if (!host) {
+      res.status(404).send({ message: `Host with id ${id} not found!` });
+    } else {
+      res
+        .status(200)
+        .send({ message: `Host with id ${id} successfully updated!`, host });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 export default router;
