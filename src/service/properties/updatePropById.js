@@ -9,9 +9,6 @@ const updatePropertyById = async (id, updatedProperty) => {
     where: { id },
     data: {
       ...rest,
-      host: {
-        connect: { id: hostId },
-      },
     },
   });
 
