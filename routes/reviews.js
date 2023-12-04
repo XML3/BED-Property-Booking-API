@@ -78,7 +78,7 @@ router.put("/:id", authMiddleware, async (req, res, next) => {
 
     if (updatedReview) {
       res.status(200).send({
-        message: `Review with id ${updatedReview} successfully updated!`,
+        message: `Review with id ${id} successfully updated!`,
         updatedReview,
       });
     } else {
