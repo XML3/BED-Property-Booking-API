@@ -16,3 +16,5 @@ const getReviews = async () => {
 };
 
 export default getReviews;
+
+//it is working now after adding "select"
