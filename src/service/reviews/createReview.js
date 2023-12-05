@@ -4,12 +4,9 @@ const createReview = async (userId, propertyId, rating, comment) => {
   const prisma = new PrismaClient();
   const newReview = await prisma.review.create({
     data: {
-      user: {
-        connect: { id: userId },
-      },
-      property: {
-        connect: { id: propertyId },
-      },
+      userId,
+      propertyId,
+
       rating,
       comment,
     },
