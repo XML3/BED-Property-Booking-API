@@ -12,12 +12,8 @@ const createBooking = async (
   const prisma = new PrismaClient();
   const booking = await prisma.booking.create({
     data: {
-      user: {
-        connect: { id: userId },
-      },
-      property: {
-        connect: { id: propertyId },
-      },
+      userId,
+      propertyId,
       checkinDate,
       checkoutDate,
       numberOfGuests,
