@@ -60,6 +60,7 @@ async function main() {
         location: property.location,
         pricePerNight: property.pricePerNight,
         bedroomCount: property.bedroomCount,
+        bathRoomCount: property.bathRoomCount,
         maxGuestCount: property.maxGuestCount,
         rating: property.rating,
         host: {
