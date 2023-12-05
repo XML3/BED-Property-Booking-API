@@ -6,7 +6,6 @@ const createReview = async (userId, propertyId, rating, comment) => {
     data: {
       userId,
       propertyId,
-
       rating,
       comment,
     },
