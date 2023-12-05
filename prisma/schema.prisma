@@ -86,6 +86,7 @@ model Property {
   location      String
   pricePerNight  Decimal @db.Decimal(10,2)
   bedroomCount  Int
+  bathRoomCount Int
   maxGuestCount Int
   rating        Int
 
