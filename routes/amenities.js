@@ -73,7 +73,7 @@ router.put("/:id", authMiddleware, async (req, res, next) => {
 
     if (updatedAmenity) {
       res.status(200).json({
-        message: `Amenity with id ${updatedAmenity} successfully updated!`,
+        message: `Amenity with id ${id} successfully updated!`,
       });
     } else {
       res.status(404).json({ message: `Amenity with id ${id} not found!` });
