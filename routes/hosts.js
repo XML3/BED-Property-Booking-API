@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
 });
 
 //POST: Create New Host
-router.post("/", async (req, res, next) => {
+router.post("/", authMiddleware, async (req, res, next) => {
   try {
     const {
       username,
@@ -64,7 +64,7 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
 });
 
 //GET: Host by ID
-router.get("/:id", authMiddleware, async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const hostId = await getHostById(id);
