@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
 });
 
 //POST: Create New Amenity
-router.post("/", async (req, res, next) => {
+router.post("/", authMiddleware, async (req, res, next) => {
   try {
     const { name } = req.body;
     const newAmenity = await createAmenity(name);
@@ -48,7 +48,7 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
 });
 
 //GET: Amenity by ID
-router.get("/:id", authMiddleware, async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const amenityId = await getAmenityById(id);
@@ -71,12 +71,15 @@ router.put("/:id", authMiddleware, async (req, res, next) => {
 
     const updatedAmenity = await updateAmenityById(id, { name });
 
-    if (updatedAmenity) {
-      res.status(200).json({
-        message: `Amenity with id ${id} successfully updated!`,
+    if (!updatedAmenity) {
+      res.status(404).send({
+        message: `Amenity with id ${id} was not found!`,
       });
     } else {
-      res.status(404).json({ message: `Amenity with id ${id} not found!` });
+      res.status(200).send({
+        message: `Amenity with id ${id} sucessfully updated!`,
+        updatedAmenity,
+      });
     }
   } catch (error) {
     next(error);
