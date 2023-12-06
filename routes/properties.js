@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
 });
 
 //POST: Create New Property
-router.post("/", async (req, res, next) => {
+router.post("/", authMiddleware, async (req, res, next) => {
   try {
     const {
       title,
@@ -69,7 +69,7 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
 });
 
 //GET: Property By ID
-router.get("/:id", authMiddleware, async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const property = await getPropertyById(id);
