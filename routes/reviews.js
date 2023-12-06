@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
 });
 
 //POST: Create New Review
-router.post("/", async (req, res, next) => {
+router.post("/", authMiddleware, async (req, res, next) => {
   try {
     const { userId, propertyId, rating, comment } = req.body;
     const review = await createReview(userId, propertyId, rating, comment);
@@ -48,7 +48,7 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
 });
 
 //GET Review by ID
-router.get("/:id", authMiddleware, async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const reviewById = await getReviewById(id);
