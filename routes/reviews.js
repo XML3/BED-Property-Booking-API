@@ -5,6 +5,8 @@ import createReview from "../src/service/reviews/createReview.js";
 import deleteReview from "../src/service/reviews/deleteReviewById.js";
 import getReviewById from "../src/service/reviews/getReviewById.js";
 import updateReviewById from "../src/service/reviews/updateReviewById.js";
+import getAvgRating from "../src/service/reviews/getAvgRating.js";
+import updateAvgRating from "../src/service/reviews/updateAvgRating.js";
 
 const router = express.Router();
 
@@ -84,6 +86,30 @@ router.put("/:id", authMiddleware, async (req, res, next) => {
     } else {
       res.status(404).json({ message: `Review with id ${id} not found!` });
     }
+  } catch (error) {
+    next(error);
+  }
+});
+
+//==================================================================================================
+// This section is for the Average Rate of a property based on the rate in Reviews
+//GET Avarage Reviews
+router.get("/getAvgRating/:propertyId", async (req, res, next) => {
+  try {
+    const { propertyId } = req.params;
+    const avgRatings = await getAvgRating(propertyId);
+    res.status(200).json(avgRatings);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//PUT Average Rating
+router.put("/updateAvgRating/:propertyId", async (req, res, next) => {
+  try {
+    const { propertyId } = req.params;
+    const updatedPropertyRate = await updateAvgRating(propertyId);
+    res.status(200).json(updatedPropertyRate);
   } catch (error) {
     next(error);
   }
