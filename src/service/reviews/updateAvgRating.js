@@ -15,6 +15,11 @@ const updateAvgRating = async (propertyId) => {
     },
   });
 
+  if (filterAvgRating.length === 0) {
+    //handle if there are no reviews.
+    return 0;
+  }
+
   const updatedPropRating = await prisma.property.updateMany({
     where: {
       id: propertyId,
