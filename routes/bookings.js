@@ -10,8 +10,9 @@ const router = express.Router();
 
 //GET: All Bookings
 router.get("/", async (req, res, next) => {
+  const { userId } = req.query;
   try {
-    const bookings = await getBookings();
+    const bookings = await getBookings(userId);
     res.status(200).json(bookings);
   } catch (error) {
     next(error);
