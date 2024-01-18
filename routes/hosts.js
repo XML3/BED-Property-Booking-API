@@ -11,7 +11,8 @@ const router = express.Router();
 //GET All Hotst
 router.get("/", async (req, res, next) => {
   try {
-    const hosts = await getHosts();
+    const { username, email } = req.query;
+    const hosts = await getHosts(username, email);
     res.status(200).json(hosts);
   } catch (error) {
     next(error);
