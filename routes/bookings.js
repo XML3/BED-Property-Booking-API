@@ -35,7 +35,7 @@ router.post("/", authMiddleware, async (req, res, next) => {
       userId,
       propertyId,
       checkinDate,
-      checkinDate,
+      checkoutDate,
       numberOfGuests,
       totalPrice,
       bookingStatus
