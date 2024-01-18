@@ -1,14 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 
-const getHosts = async (username, email) => {
+const getHosts = async (name) => {
   const prisma = new PrismaClient();
   const hosts = await prisma.host.findMany({
     where: {
-      username: {
-        contains: username,
-      },
-      email: {
-        contains: email,
+      name: {
+        contains: name,
       },
     },
     select: {
