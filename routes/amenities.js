@@ -11,7 +11,8 @@ const router = express.Router();
 //GET All Amenities
 router.get("/", async (req, res, next) => {
   try {
-    const amenities = await getAmenities();
+    const { name } = req.query;
+    const amenities = await getAmenities(name);
     res.status(200).json(amenities);
   } catch (error) {
     next(error);
