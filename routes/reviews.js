@@ -12,8 +12,9 @@ const router = express.Router();
 
 //GET all Reviews
 router.get("/", async (req, res, next) => {
+  const { userId, propertyId } = req.query;
   try {
-    const reviews = await getReviews();
+    const reviews = await getReviews(userId, propertyId);
     res.status(200).json(reviews);
   } catch (error) {
     next(error);
