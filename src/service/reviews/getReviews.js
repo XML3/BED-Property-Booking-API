@@ -1,8 +1,16 @@
 import { PrismaClient } from "@prisma/client";
 
-const getReviews = async () => {
+const getReviews = async (userId, propertyId) => {
   const prisma = new PrismaClient();
   const reviews = await prisma.review.findMany({
+    where: {
+      userId: {
+        contains: userId,
+      },
+      propertyId: {
+        contains: propertyId,
+      },
+    },
     select: {
       id: true,
       userId: true,
