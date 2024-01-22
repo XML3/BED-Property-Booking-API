@@ -70,11 +70,9 @@ router.get("/:id", async (req, res, next) => {
 router.put("/:id", authMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { userId, propertyId, rating, comment } = req.body;
+    const { rating, comment } = req.body;
 
     const updatedReview = await updateReviewById(id, {
-      userId,
-      propertyId,
       rating,
       comment,
     });
@@ -93,7 +91,7 @@ router.put("/:id", authMiddleware, async (req, res, next) => {
 });
 
 //==================================================================================================
-// This section is for the Average Rate of a property based on the rate in Reviews
+// This section is for the Average Rate of a property based on the rate in Reviews (Not a Requirement For this project)
 //GET Avarage Reviews
 router.get("/getAvgRating/:propertyId", async (req, res, next) => {
   try {
