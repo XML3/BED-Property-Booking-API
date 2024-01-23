@@ -12,7 +12,11 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
   try {
     const { location, pricePerNight, amenities } = req.query;
-    const properties = await getProperties(location, pricePerNight, amenities);
+    let properties = await getProperties(location, pricePerNight, amenities);
+    properties = properties.map((property) => ({
+      ...property,
+      pricePerNight: parseFloat(property.pricePerNight),
+    }));
     res.status(200).json(properties);
   } catch (error) {
     next(error);
