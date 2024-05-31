@@ -1,7 +1,10 @@
 # Property / Bookings Express API Project
 
 Back-end Express API project, aimed at replicating the functionality of a property booking system online. 
-It manages users and hosts interaction with the platform to handle the create, view, update, and delete sections of the App for personal bookings or properties with an integrated secure authentication and authorization in order to verify user's identity and grant appropiate permissions and access.  Moreover, the API facilitates the rating of properties and the creation of reviews, allowing users to share their experiences and insights. Notably, the system dynamically calculates the average rating for each property, ensuring up-to-date and accurate feedback for users.
+
+It manages users and hosts interaction with the platform to handle the create, view, update, and delete sections of the App for personal bookings or properties with an integrated secure authentication and authorization in order to verify user's identity and grant appropiate permissions and access.  
+
+Moreover, the API facilitates the rating of properties and the creation of reviews, allowing users to share their experiences and insights. Notably, the system dynamically calculates the average rating for each property, ensuring up-to-date and accurate feedback for users.
 
 
 # BED Final Project Starter
