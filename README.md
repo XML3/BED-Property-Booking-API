@@ -7,7 +7,7 @@ It manages users and hosts interaction with the platform to handle the create, v
 Moreover, the API facilitates the rating of properties and the creation of reviews, allowing users to share their experiences and insights. Notably, the system dynamically calculates the average rating for each property, ensuring up-to-date and accurate feedback for users.
 
 
-# BED Final Project Starter
+# BED PROPERTY/BOOKINGS EXPRESS API Project Starter
 
 This repository contains starter code for the Bookings project.
 
