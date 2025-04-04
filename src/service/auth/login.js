@@ -15,7 +15,10 @@ const login = async (username, password) => {
     return null;
   }
 
-  const token = jwt.sign({ userId: user.id }, secretKey);
+  const token = jwt.sign(
+    { userId: user.id, name: user.name, email: user.email },
+    secretKey
+  );
   return token;
 };
 
