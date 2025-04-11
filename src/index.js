@@ -10,6 +10,23 @@ import reviewsRouter from "../routes/reviews.js";
 import loginRouter from "../routes/login.js";
 import * as Sentry from "@sentry/node";
 import "dotenv/config";
+import cors from "cors";
+import { PrismaClient } from "@prisma/client";
+import { PrismaLibSQL } from "@prisma/adapter-libsql";
+import { createClient } from "@libsql/client";
+
+const libsql = createClient({
+  url: `${process.env.TURSO_DATABASE_URL}`,
+  authToken: `${process.env.TURSO_AUTH_TOKEN}`,
+});
+
+const adapter = new PrismaLibSQL(libsql);
+try {
+  const prisma = new PrismaClient({ adapter });
+  console.log("Prisma Client initialized successfully");
+} catch (error) {
+  console.error("Error initializing Prisma Client:", error);
+}
 
 const app = express();
 
@@ -36,6 +53,13 @@ app.use(Sentry.Handlers.tracingHandler());
 app.use(express.json());
 app.use(log);
 
+const corsOptions = {
+  origin: "https://localhost:3000",
+  method: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
+
 //Routes go here
 app.use("/users", usersRouter);
 app.use("/bookings", bookingsRouter);
@@ -52,6 +76,8 @@ app.use(Sentry.Handlers.errorHandler());
 //erroHandler goes here
 app.use(errorHandler);
 
-app.listen(3000, () => {
-  console.log("Server is listening on port 3000");
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
 });
+export default app;

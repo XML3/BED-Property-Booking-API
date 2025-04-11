@@ -10,25 +10,17 @@ const prisma = new PrismaClient({ log: ["query", "info", "warn", "error"] });
 
 async function main() {
   const { amenities } = amenityData;
-  const { bookings } = bookingData;
   const { hosts } = hostData;
+  const { users } = userData;
   const { properties } = propertyData;
   const { reviews } = reviewData;
-  const { users } = userData;
+  const { bookings } = bookingData;
 
   for (const amenity of amenities) {
     await prisma.amenity.upsert({
       where: { id: amenity.id },
       update: {},
       create: amenity,
-    });
-  }
-
-  for (const booking of bookings) {
-    await prisma.booking.upsert({
-      where: { id: booking.id },
-      update: {},
-      create: booking,
     });
   }
 
@@ -45,6 +37,32 @@ async function main() {
         phoneNumber: host.phoneNumber,
         profilePicture: host.profilePicture,
         aboutMe: host.aboutMe,
+      },
+    });
+  }
+
+  for (const user of users) {
+    await prisma.user.upsert({
+      where: { id: user.id },
+      update: {},
+      create: {
+        id: user.id,
+        username: user.username,
+        password: user.password,
+        name: user.name,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        profilePicture: user.profilePicture,
+        reviews: {
+          connect: user.reviews
+            ? user.reviews.map((reviewId) => ({ id: reviewId }))
+            : [],
+        },
+        bookings: {
+          connect: user.bookings
+            ? user.bookings.map((bookingId) => ({ id: bookingId }))
+            : [],
+        },
       },
     });
   }
@@ -85,32 +103,6 @@ async function main() {
     });
   }
 
-  for (const user of users) {
-    await prisma.user.upsert({
-      where: { id: user.id },
-      update: {},
-      create: {
-        id: user.id,
-        username: user.username,
-        password: user.password,
-        name: user.name,
-        email: user.email,
-        phoneNumber: user.phoneNumber,
-        profilePicture: user.profilePicture,
-        reviews: {
-          connect: user.reviews
-            ? user.reviews.map((reviewId) => ({ id: reviewId }))
-            : [],
-        },
-        bookings: {
-          connect: user.bookings
-            ? user.bookings.map((bookingId) => ({ id: bookingId }))
-            : [],
-        },
-      },
-    });
-  }
-
   for (const review of reviews) {
     await prisma.review.upsert({
       where: { id: review.id },
@@ -124,6 +116,27 @@ async function main() {
         },
         user: {
           connect: { id: review.userId },
+        },
+      },
+    });
+  }
+
+  for (const booking of bookings) {
+    await prisma.booking.upsert({
+      where: { id: booking.id },
+      update: {},
+      create: {
+        id: booking.id,
+        checkinDate: booking.checkinDate,
+        checkoutDate: booking.checkoutDate,
+        numberOfGuests: booking.numberOfGuests,
+        totalPrice: booking.totalPrice,
+        bookingStatus: booking.bookingStatus,
+        user: {
+          connect: { id: booking.userId },
+        },
+        property: {
+          connect: { id: booking.propertyId },
         },
       },
     });
